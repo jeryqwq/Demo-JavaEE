@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans  xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframeword.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">                 
+    <context:component-scan base-package="aop"/> 
+    <bean id='myAspect' class="aop.aspect"></bean>
+    <aop:config>
+        <aop:aspect id="aspect" ref="myAspect">
+            <aop:pointcut expression="excution(* aop.*.*(..))" id="mypointcut">
+                <aop:before method="myBefore" pointcut-ref="mypointcut">    
+                </aop:before>
+            
+            </aop:pointcut>
+            
+        </aop:aspect>
+    </aop:config>
+    <!--   <mvc:default-servlet-handler />
+   <mvc:annotation-driven  />     -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+            id="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsps/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+   <mvc:annotation-driven  conversion-service="conversionService"/>  
+      <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="com.converter.StringDate"/>
+            </set>
+        </property>
+    </bean> 
+</beans>	

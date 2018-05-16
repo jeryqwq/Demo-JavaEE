@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans  xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframeword.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">     
+                
+     <bean id='userDao' class="aop.UserDaoImpl"/>
+    <bean id='myAspect' class="aop.aspect"/>
+    <aop:config>
+        <aop:aspect id="aspect" ref="myAspect"><!--  第一个*是返回值 后面更的是包 在后面是是类名 最后方法名  -->
+            <aop:pointcut expression="execution(* aop.UserDaoImpl.*(..))" id="mypointcut"/>
+                <aop:before method="myBefore" pointcut-ref="mypointcut"/>  
+             <aop:after-returning method="myAfterReturning" pointcut-ref="mypointcut" />  
+             <aop:around method="myAround" pointcut-ref="mypointcut" />
+             <aop:after-throwing method="myAfterThrowing" pointcut-ref='mypointcut' throwing='e'/>
+             <aop:after method="myAfter" pointcut-ref="mypointcut"/>
+        </aop:aspect>
+    </aop:config>
+
+
+</beans>	

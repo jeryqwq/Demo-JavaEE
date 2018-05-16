@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.CustomerMapper">
+ <select id="findCustomerById" parameterType="Integer" resultType="mybatis.Customer">
+ select * from customer where id = #{id}
+ </select>
+ <insert id="addCustomer" parameterType="mybatis.Customer">
+     insert into customer(username,jobs,phone) values(#{username},#{jobs},#{phone})
+ </insert>
+</mapper>
